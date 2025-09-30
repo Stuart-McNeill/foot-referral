@@ -1,0 +1,1649 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="robots" content="index, follow">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+/*-----------------------------------------------------------------------------------
+	Podiatry referral
+	About: A shiny new Blocs website.
+	Author: Stuart McNeill
+	Version: 1.0
+	Built with Blocs
+-----------------------------------------------------------------------------------*/
+body{
+	margin:0;
+	padding:0;
+    background:#FFFFFF;
+    overflow-x:hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.page-container{overflow: hidden;} /* Prevents unwanted scroll space when scroll FX used. */
+a,button{transition: background .3s ease-in-out;outline: none!important;} /* Prevent blue selection glow on Chrome and Safari */
+a:hover{text-decoration: none; cursor:pointer;}
+.scroll-fx-lock-init{position:fixed!important;top: 0;bottom: 0;left: 0;right: 0;z-index:99999;} /* ScrollFX Lock */
+.blocs-grid-container{display: grid!important;grid-template-columns: 1fr 1fr;grid-template-rows: auto auto;column-gap: 1.5rem;row-gap: 1.5rem;} /* CSS Grid */
+nav .dropdown-menu .nav-link{color:rgba(0,0,0,0.6)!important;} /* Maintain Downdown Menu Link Color in Navigation */
+[data-bs-theme="dark"] nav .dropdown-menu .nav-link{color:var(--bs-dropdown-link-color)!important;} /* Maintain Downdown Menu Link Color in Navigation in Darkmode */
+
+
+/* Preloader */
+
+.page-preloader{position: fixed;top: 0;bottom: 0;width: 100%;z-index:100000;background:#FFFFFF url("img/pageload-spinner.gif") no-repeat center center;animation-name: preloader-fade;animation-delay: 2s;animation-duration: 0.5s;animation-fill-mode: both;}
+.preloader-complete{animation-delay:0.1s;}
+@keyframes preloader-fade {0% {opacity: 1;visibility: visible;}100% {opacity: 0;visibility: hidden;}}
+
+/* = Blocs
+-------------------------------------------------------------- */
+
+.bloc{
+	width:100%;
+	clear:both;
+	background: 50% 50% no-repeat;
+	padding:0 20px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	position:relative;
+	display:flex;
+}
+.bloc .container{
+	padding-left:0;
+	padding-right:0;
+	position:relative;
+}
+
+
+/* Sizes */
+
+.bloc-lg{
+	padding:100px 20px;
+}
+
+
+/* Light theme */
+
+.d-bloc .card,.l-bloc{
+	color:rgba(0,0,0,.5);
+}
+.d-bloc .card button:hover,.l-bloc button:hover{
+	color:rgba(0,0,0,.7);
+}
+.l-bloc .icon-round,.l-bloc .icon-square,.l-bloc .icon-rounded,.l-bloc .icon-semi-rounded-a,.l-bloc .icon-semi-rounded-b{
+	border-color:rgba(0,0,0,.7);
+}
+.d-bloc .card .divider-h span,.l-bloc .divider-h span{
+	border-color:rgba(0,0,0,.1);
+}
+.d-bloc .card .a-btn,.l-bloc .a-btn,.l-bloc .navbar a,.l-bloc a .icon-sm, .l-bloc a .icon-md, .l-bloc a .icon-lg, .l-bloc a .icon-xl, .l-bloc h1 a, .l-bloc h2 a, .l-bloc h3 a, .l-bloc h4 a, .l-bloc h5 a, .l-bloc h6 a, .l-bloc p a{
+	color:rgba(0,0,0,.6);
+}
+.d-bloc .card .a-btn:hover,.l-bloc .a-btn:hover,.l-bloc .navbar a:hover, .l-bloc a:hover .icon-sm, .l-bloc a:hover .icon-md, .l-bloc a:hover .icon-lg, .l-bloc a:hover .icon-xl, .l-bloc h1 a:hover, .l-bloc h2 a:hover, .l-bloc h3 a:hover, .l-bloc h4 a:hover, .l-bloc h5 a:hover, .l-bloc h6 a:hover, .l-bloc p a:hover{
+	color:rgba(0,0,0,1);
+}
+.l-bloc .navbar-toggle .icon-bar{
+	color:rgba(0,0,0,.6);
+}
+.d-bloc .card .btn-wire,.d-bloc .card .btn-wire:hover,.l-bloc .btn-wire,.l-bloc .btn-wire:hover{
+	color:rgba(0,0,0,.7);
+	border-color:rgba(0,0,0,.3);
+}
+
+
+/* = NavBar
+-------------------------------------------------------------- */
+
+/* Navbar Icon */
+.svg-menu-icon{
+	fill: none;
+	stroke: rgba(0,0,0,0.5);
+	stroke-width: 2px;
+	fill-rule: evenodd;
+}
+.navbar-dark .svg-menu-icon{
+	stroke: rgba(255,255,255,0.5);
+}
+.menu-icon-thin-bars{
+	stroke-width: 1px;
+}
+.menu-icon-thick-bars{
+	stroke-width: 5px;
+}
+.menu-icon-rounded-bars{
+	stroke-width: 3px;
+	stroke-linecap: round;
+}
+.menu-icon-filled{
+	fill: rgba(0,0,0,0.5);
+	stroke-width: 0px;
+}
+.navbar-dark .menu-icon-filled{
+	fill: rgba(255,255,255,0.5);
+}
+.navbar-toggler-icon{
+	background: none!important;
+	pointer-events: none;
+	width: 33px;
+	height: 33px;
+}
+/* Handle Multi Level Navigation */
+.dropdown-menu .dropdown-menu{
+	border:none}
+@media (min-width:576px){
+	
+.navbar-expand-sm .dropdown-menu .dropdown-menu{
+	border:1px solid rgba(0,0,0,.15);
+	position:absolute;
+	left:100%;
+	top:-7px}.navbar-expand-sm .dropdown-menu .submenu-left{
+	right:100%;
+	left:auto}}@media (min-width:768px){
+	.navbar-expand-md .dropdown-menu .dropdown-menu{
+	border:1px solid rgba(0,0,0,.15);
+	border:1px solid rgba(0,0,0,.15);
+	position:absolute;
+	left:100%;
+	top:-7px}.navbar-expand-md .dropdown-menu .submenu-left{
+	right:100%;
+	left:auto}}@media (min-width:992px){
+	.navbar-expand-lg .dropdown-menu .dropdown-menu{
+	border:1px solid rgba(0,0,0,.15);
+	position:absolute;
+	left:100%;
+	top:-7px}.navbar-expand-lg .dropdown-menu .submenu-left{
+	right:100%;
+	left:auto}
+}
+
+/* = Buttons
+-------------------------------------------------------------- */
+
+.btn-d,.btn-d:hover,.btn-d:focus{
+	color:#FFF;
+	background:rgba(0,0,0,.3);
+}
+
+
+
+
+
+
+.card-sq, .card-sq .card-header, .card-sq .card-footer{
+	border-radius:0;
+}
+.card-rd{
+	border-radius:30px;
+}
+.card-rd .card-header{
+	border-radius:29px 29px 0 0;
+}
+.card-rd .card-footer{
+	border-radius:0 0 29px 29px;
+}
+/* = Masonary
+-------------------------------------------------------------- */
+.card-columns .card {
+	margin-bottom: 0.75rem;
+}
+@media (min-width: 576px) {
+	.card-columns {
+	-webkit-column-count: 3;
+	-moz-column-count: 3;
+	column-count: 3;
+	-webkit-column-gap: 1.25rem;
+	-moz-column-gap: 1.25rem;
+	column-gap: 1.25rem;
+	orphans: 1;
+	widows: 1;
+}
+.card-columns .card {
+	display: inline-block;
+	width: 100%;
+}
+}
+/* = Classic Dividers
+-------------------------------------------------------------- */
+.divider-h{
+	min-height: 1px;
+	background-color:rgba(0,0,0,.2);
+	margin: 20px 0;
+}
+.divider-half{
+	width: 50%;
+}
+.dropdown-menu .divider-h{
+	margin:0;
+}
+
+
+
+/* ScrollToTop button */
+
+.scrollToTop{
+	width:36px;
+	height:36px;
+	padding:5px;
+	position:fixed;
+	bottom:20px;
+	right:20px;
+	opacity:0;
+	z-index:999;
+	transition: all .3s ease-in-out;
+	pointer-events:none;
+}
+.showScrollTop{
+	opacity: 1;
+	pointer-events:all;
+}
+.scroll-to-top-btn-icon{
+	fill: none;
+	stroke: #fff;
+	stroke-width: 2px;
+	fill-rule: evenodd;
+	stroke-linecap:round;
+}
+
+/* = Custom Styling
+-------------------------------------------------------------- */
+
+h1,h2,h3,h4,h5,h6,p,label,.btn,a{
+	font-family:"Helvetica";
+}
+.container{
+	max-width:1140px;
+}
+.img-style{
+	width:200px;
+}
+.field-style{
+	height:51px;
+}
+.option-select-style{
+	width:44.12%;
+}
+.option-select-bloc-0-style{
+	width:36.67%;
+}
+.container-div-style{
+	width:100%;
+}
+.img-bloc-0-style{
+	width:558px;
+	height:300px;
+}
+
+/* = Colour
+-------------------------------------------------------------- */
+
+/* Swatch Variables */
+:root{
+	
+	--swatch-var-1628:rgba(174,30,44,1.00);
+	
+	--swatch-var-4888:rgba(180,192,206,0.14);
+	
+	--swatch-var-1270:rgba(0,0,0,1.00);
+	
+	--swatch-var-3956:rgba(142,193,212,1.00);
+	
+	--swatch-var-719:rgba(244,155,132,1.00);
+	
+	--swatch-var-5045:rgba(176,112,140,1.00);
+	
+	--swatch-var-3754:rgba(159,191,99,1.00);
+	
+	--swatch-var-2975:rgba(127,112,143,1.00);
+	
+	--swatch-var-6998:rgba(241,198,0,1.00);
+	
+	--swatch-var-3383:rgba(228,142,174,1.00);
+	
+	--swatch-var-2050:rgba(118,116,169,1.00);
+	
+	--swatch-var-2170:rgba(240,144,78,1.00);
+	
+}
+
+
+/* Background colour styles */
+
+.bgc-4888{
+	background-color:var(--swatch-var-4888);
+}
+
+/* Text colour styles */
+
+.tc-1628{
+	color:var(--swatch-var-1628)!important;
+}
+.tc-1270{
+	color:var(--swatch-var-1270)!important;
+}
+.tc-3956{
+	color:var(--swatch-var-3956)!important;
+}
+.tc-719{
+	color:var(--swatch-var-719)!important;
+}
+.tc-3383{
+	color:var(--swatch-var-3383)!important;
+}
+.tc-3754{
+	color:var(--swatch-var-3754)!important;
+}
+.tc-2975{
+	color:var(--swatch-var-2975)!important;
+}
+.tc-6998{
+	color:var(--swatch-var-6998)!important;
+}
+.tc-2050{
+	color:var(--swatch-var-2050)!important;
+}
+.tc-2170{
+	color:var(--swatch-var-2170)!important;
+}
+.tc-5045{
+	color:var(--swatch-var-5045)!important;
+}
+
+
+
+
+/* = Toggle Visibility
+-------------------------------------------------------------- */
+
+.toggled-item{transition: height 350ms ease-in-out, padding 350ms ease-in-out, opacity 350ms ease-in-out;overflow: hidden;}
+.toggled-item-hidden{padding-top:0!important;padding-bottom:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;opacity: 0;}
+.object-hidden{display:none;}
+
+
+/* = Bloc Padding Multi Breakpoint
+-------------------------------------------------------------- */
+
+@media (min-width: 576px) {
+    .bloc-xxl-sm{padding:200px 20px;}
+    .bloc-xl-sm{padding:150px 20px;}
+    .bloc-lg-sm{padding:100px 20px;}
+    .bloc-md-sm{padding:50px 20px;}
+    .bloc-sm-sm{padding:20px;}
+    .bloc-no-padding-sm{padding:0 20px;}
+}
+@media (min-width: 768px) {
+    .bloc-xxl-md{padding:200px 20px;}
+    .bloc-xl-md{padding:150px 20px;}
+    .bloc-lg-md{padding:100px 20px;}
+    .bloc-md-md{padding:50px 20px;}
+    .bloc-sm-md{padding:20px 20px;}
+    .bloc-no-padding-md{padding:0 20px;}
+}
+@media (min-width: 992px) {
+    .bloc-xxl-lg{padding:200px 20px;}
+    .bloc-xl-lg{padding:150px 20px;}
+    .bloc-lg-lg{padding:100px 20px;}
+    .bloc-md-lg{padding:50px 20px;}
+    .bloc-sm-lg{padding:20px;}
+    .bloc-no-padding-lg{padding:0 20px;}
+}
+
+
+/* = Mobile adjustments 
+-------------------------------------------------------------- */
+@media (max-width: 1024px)
+{
+    .bloc.full-width-bloc, .bloc-tile-2.full-width-bloc .container, .bloc-tile-3.full-width-bloc .container, .bloc-tile-4.full-width-bloc .container{
+        padding-left: 0; 
+        padding-right: 0;  
+    }
+}
+@media (max-width: 991px)
+{
+    .container{width:100%;}
+    .bloc{padding-left: constant(safe-area-inset-left);padding-right: constant(safe-area-inset-right);} /* iPhone X Notch Support*/
+    .bloc-group, .bloc-group .bloc{display:block;width:100%;}
+}
+@media (max-width: 767px)
+{
+    .bloc-tile-2 .container, .bloc-tile-3 .container, .bloc-tile-4 .container{
+        padding-left:0;padding-right:0;
+    }
+    .btn-dwn{
+       display:none; 
+    }
+    .voffset{
+        margin-top:5px;
+    }
+    .voffset-md{
+        margin-top:20px;
+    }
+    .voffset-lg{
+        margin-top:30px;
+    }
+    form{
+        padding:5px;
+    }
+    .close-lightbox{
+        display:inline-block;
+    }
+    .blocsapp-device-iphone5{
+	   background-size: 216px 425px;
+	   padding-top:60px;
+	   width:216px;
+	   height:425px;
+    }
+    .blocsapp-device-iphone5 img{
+	   width: 180px;
+	   height: 320px;
+    }
+}
+
+
+</style>
+	
+    <title>Home</title>
+
+
+    
+<!-- Analytics -->
+ 
+<!-- Analytics END -->
+    
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+<!-- Preloader END -->
+
+
+<!-- Main container -->
+<div class="page-container">
+    
+<!-- bloc-0 -->
+<div class="bloc l-bloc " id="bloc-0">
+	<div class="container bloc-lg">
+		<div class="row">
+			<div class="col text-start">
+				<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/NHSLlogo.png" data-srcset="img/NHS%20Lanarkshire%20Logo.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/NHSLlogo.png" class="img-fluid mx-auto d-block img-style me-lg-5 pb-lg-4 lazyload" alt="NHS%20Lanarkshire%20Logo" width="200" height="136"></picture>
+				<h1 class="mb-4 ps-lg-3">
+					<strong>NHS Lanarkshire Podiatry Referral Form</strong>
+				</h1>
+				<h4 class="mb-3 pe-lg-5 ps-lg-3 tc-1628">
+					If you have an open wound that is bleeding, oozing pus, or showing any signs of infection — such as a foot that becomes swollen, hot to the touch, painful, or red (especially noticeable in lighter skin tones) — or if you notice unusual colour changes like darkening, purple, grey, pale, or blue toes, please contact the Podiatry Hub on <strong>01698 753 753.</strong>
+				</h4>
+			</div>
+			<div class="col-lg-12">
+				<h5 class="mb-4 ms-lg-3 mt-lg-4 mb-lg-0">
+					<strong>*Please note we DO NOT provide routine treatment for fungal toenails, verrucae and toenail cutting.<br>We DO NOT accept referrals from people who have an acute stress fracture or an acute fracture to their foot*</strong>
+				</h5>
+			</div>
+			<div class="col-lg-12">
+				<div class="divider-h">
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Information about You (The patient)</strong>
+				</h3>
+			</div>
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<h4 class="mb-4">
+							<strong>Name:</strong>
+						</h4>
+						<div class="form-group mb-3">
+							<form id="referralForm"><input class="form-control" placeholder="Enter Name" name="patient_name" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>Address:</strong>
+							</h4>
+							<input class="form-control" placeholder="Enter Address Line 1" name="address1" >
+							<input class="form-control mt-lg-4" placeholder="Enter Address Line 2" name="address2" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>Postcode:</strong>
+							</h4>
+							<input class="form-control mt-lg-4" placeholder="Enter Postcode" name="postcode" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>GP Practice:</strong>
+							</h4>
+							<input class="form-control mt-lg-3" placeholder="Enter GP Practice" name="gp_practice" >
+						</div>
+					</div>
+					<div class="col">
+						<h4 class="mb-4">
+							<strong>Date of Birth:</strong>
+						</h4>
+						<div class="form-group mb-3">
+							<input class="form-control" placeholder="Enter Date of Birth" id="input_2890" name="dob" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>Telephone:</strong>
+							</h4>
+							<input class="form-control" placeholder="Enter Telephone" id="input_1580" name="telephone" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>Can we leave a voicemail?</strong>
+							</h4>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" value="Yes" name="email" >
+								<label class="form-check-label">
+									Yes
+								</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox">
+								<label class="form-check-label">
+									No
+								</label>
+							</div>
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>Email Address:</strong>
+							</h4>
+							<input class="form-control mt-lg-3" placeholder="Enter Email Address" id="input_885" type="email" data-error-validation-msg="Not a valid email address" name="email" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-2 mb-lg-2">
+				<div class="row">
+					<div class="col pb-lg-4">
+						<div class="ms-lg-3">
+							<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>What is your Main Problem?</strong>
+							</h3>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Pain in your muscle or joints in your foot
+									</option>
+									<option value="0">
+										A foot wound or ulcer
+									</option>
+									<option value="0">
+										Ingrown toenail with broken skin
+									</option>
+									<option value="0">
+										Painful toenail
+									</option>
+									<option value="1">
+										Diabetes foot check/concern
+									</option>
+									<option value="0">
+										Hard Skin or Corn(s)
+									</option>
+								</select name="main_problem" >
+							</div>
+							<div class="divider-h">
+							</div>
+						</div>
+						<div class="ms-lg-3">
+							<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>When did this start?</strong>
+							</h3>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Within 2 weeks
+									</option>
+									<option value="0">
+										2 - 6 weeks
+									</option>
+									<option value="0">
+										6 - 12 weeks
+									</option>
+									<option value="0">
+										Over 3 months
+									</option>
+								</select name="when_started" >
+							</div>
+						</div>
+					</div>
+					<div class="col pb-lg-4">
+						<div>
+							<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Which foot has a Problem?</strong>
+							</h3>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Left Foot
+								</option>
+								<option value="0">
+									Right Foot
+								</option>
+								<option value="1">
+									Both Feet
+								</option>
+							</select name="which_foot" >
+							<div class="divider-h">
+							</div>
+						</div>
+						<div>
+							<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Is the pain worsening quickly?</strong><br>
+							</h3>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									No
+								</option>
+								<option value="0">
+									Yes - rapidly over days
+								</option>
+								<option value="0">
+									Yes - gradually over weeks
+								</option>
+							</select name="pain_worsening" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-2 mb-lg-2">
+				<div class="row">
+					<div class="col pb-lg-4">
+						<div class="ms-lg-3">
+							<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Do you have diabetes?</strong>
+							</h3>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select name="diabetes" >
+							</div>
+						</div>
+					</div>
+					<div class="col pb-lg-4">
+						<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+							<strong>Have you previously had a wound on your foot/feet?</strong>
+						</h4>
+						<select class="form-control form-select option-select-style ms-lg-3">
+							<option value="0">
+								Please select...
+							</option>
+							<option value="0">
+								Yes
+							</option>
+							<option value="0">
+								No
+							</option>
+						</select name="previous_wound" >
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="divider-h">
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Are you suffering from any of the following (in relation to your foot)?</strong>
+				</h3>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-2 mb-lg-2">
+				<div class="row">
+					<div class="col pb-lg-4">
+						<div class="ms-lg-3">
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Cuts or breaks to the skin?</strong>
+							</h4>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select name="cuts_breaks" >
+								<div class="divider-h">
+								</div>
+							</div>
+						</div>
+						<div class="ms-lg-3">
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Swelling?</strong>
+							</h4>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select name="swelling" >
+								<div class="divider-h">
+								</div>
+							</div>
+						</div>
+						<div class="ms-lg-3">
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Heat?</strong>
+							</h4>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select name="heat" >
+							</div>
+						</div>
+					</div>
+					<div class="col pb-lg-4">
+						<div>
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Changes in the colour of your skin? (black, white, red)</strong>
+							</h4>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select name="colour_change" >
+							<div class="divider-h">
+							</div>
+						</div>
+						<div>
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Leaking Fluid?</strong>
+							</h4>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select name="leaking_fluid" >
+							<div class="divider-h">
+							</div>
+						</div>
+						<div>
+							<h4 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>New pain?</strong>
+							</h4>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select name="new_pain" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="divider-h">
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Please detail where your foot issues is located?</strong>
+				</h3>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col-lg-12">
+						<h5 class="mb-3 ms-lg-3 mt-lg-3">
+							<strong>Please select the corresponding checkboxes below where you feel your foot issue is located?</strong>
+						</h5>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 pt-lg-3">
+				<div class="row">
+					<div class="col mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Inside%20Ankle.png" data-srcset="img/Inside%20Ankle.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Inside%20Ankle.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="334"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Inside Ankle</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" value="Yes" name="loc_inside_ankle" >
+								<h4 class="form-check-label tc-3956">
+									<strong class="ms-lg-3">Inside Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52" value="Yes" name="loc_inside_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-719">
+									<strong class="ms-lg-3">Front of Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054" value="Yes" name="loc_front_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-3383">
+									<strong class="ms-lg-3">Back of Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405" value="Yes" name="loc_back_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-3754">
+									<strong class="ms-lg-3">Back of Heel</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382" value="Yes" name="loc_back_heel" >
+								<h4 class="form-check-label mt-lg-3 tc-2975">
+									<strong class="ms-lg-3">Achilles</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Outside%20Ankle.png" data-srcset="img/Outside%20Ankle.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Outside%20Ankle.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="334"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Outside Ankle</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" value="Yes" name="loc_outside_ankle" >
+								<h4 class="form-check-label tc-6998">
+									<strong class="ms-lg-3">Outside Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52" value="Yes" name="loc_outside_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-719">
+									<strong class="ms-lg-3">Front of Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054" value="Yes" name="loc_front_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-3383">
+									<strong class="ms-lg-3">Back of Ankle</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405" value="Yes" name="loc_back_ankle" >
+								<h4 class="form-check-label mt-lg-3 tc-3754">
+									<strong class="ms-lg-3">Back of Heel</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382" value="Yes" name="loc_back_heel" >
+								<h4 class="form-check-label mt-lg-3 tc-2975">
+									<strong class="ms-lg-3">Achilles</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Top%20Toes.png" data-srcset="img/Top%20Toes.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Top%20Toes.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="546"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Top of Toes</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label">
+									<strong class="ms-lg-3">Toe 1</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52" value="Yes" name="toe1_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Toe 2</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054" value="Yes" name="toe2_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Toe 3</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405" value="Yes" name="toe3_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Toe 4</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382" value="Yes" name="toe4_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Toe 5</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Underneath%20Toes.png" data-srcset="img/Underneath%20Toes.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Underneath%20Toes.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="544"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Underneath Toes</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label">
+									<strong class="ms-lg-3">Under Toe 1</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52" value="Yes" name="toe1_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Under Toe 2</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054" value="Yes" name="toe2_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Under Toe 3</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405" value="Yes" name="toe3_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Under Toe 4</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382" value="Yes" name="toe4_top" >
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Under Toe 5</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Bottom%20Foot.png" data-srcset="img/Bottom%20Foot.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Bottom%20Foot.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="331"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Bottom of Foot</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label tc-3956">
+									<strong class="ms-lg-3">Heel</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52">
+								<h4 class="form-check-label mt-lg-3 tc-3383">
+									<strong class="ms-lg-3">Inside Arch</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054" value="Yes" name="arch_inside" >
+								<h4 class="form-check-label mt-lg-3 tc-3754">
+									<strong class="ms-lg-3">Central Foot</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405">
+								<h4 class="form-check-label mt-lg-3 tc-2050">
+									<strong class="ms-lg-3">Outside Border</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382">
+								<h4 class="form-check-label mt-lg-3 tc-6998">
+									<strong class="ms-lg-3">Ball of Foot</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_445" value="Yes" name="ball_of_foot" >
+								<h4 class="form-check-label mt-lg-3 tc-2170">
+									<strong class="ms-lg-3">Toes</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Middle%20Top%20Foot.png" data-srcset="img/Middle%20Top%20Foot.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Middle%20Top%20Foot.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="604"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Middle and Top of Foot</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label tc-3956">
+									<strong class="ms-lg-3">Top and Middle of Foot</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52">
+								<h4 class="form-check-label mt-lg-3 tc-719">
+									<strong class="ms-lg-3">Inside Top of Foot</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054">
+								<h4 class="form-check-label mt-lg-3 tc-5045">
+									<strong class="ms-lg-3">Outside Top of Foot</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Top%20Front%20Foot.png" data-srcset="img/Top%20Front%20Foot.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Top%20Front%20Foot.png" class="img-fluid mx-auto d-block lazyload" alt="Inside%20Ankle" width="558" height="513"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Top and Front of Foot</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label">
+									<strong class="ms-lg-3">Top of Joint 1</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Top of Joint 2</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Top of Joint 3</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Top of Joint 4</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Top of Joint 5</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-4">
+				<div class="row">
+					<div class="col mt-lg-3 mb-lg-3">
+						<picture><source type="image/webp" srcset="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Bottom%20Front%20Foot.png" data-srcset="img/Bottom%20Front%20Foot.webp"><img src="https://raw.githubusercontent.com/Stuart-McNeill/foot-referral/refs/heads/main/Bottom%20Front%20Foot.png" class="img-fluid mx-auto d-block lazyload" alt="Bottom%20Front%20Foot" width="558" height="513"></picture>
+					</div>
+					<div class="col">
+						<h4 class="mb-4 ms-lg-4 mt-lg-4 tc-1270">
+							<strong>Bottom and Front of Foot</strong>
+						</h4>
+						<div class="divider-h ms-lg-4 me-lg-4">
+						</div>
+						<div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox">
+								<h4 class="form-check-label">
+									<strong class="ms-lg-3">Bottom of Joint 1</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_52">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Bottom of Joint 2</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_1054">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Bottom of Joint 3</strong>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_405">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Bottom of Joint 4</strong><br>
+								</h4>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input ms-lg-1" type="checkbox" id="input_2382">
+								<h4 class="form-check-label mt-lg-3">
+									<strong class="ms-lg-3">Bottom of Joint 5</strong>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col bgc-4888 mt-lg-3">
+						<h3 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3 pt-lg-2">
+							<strong>Please give more detail about your problem?</strong>
+						</h3>
+						<div class="form-group mb-3 container-div-min-height">
+							<input class="form-control field-style" name="problem_detail" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Your medical conditions/medications</strong>
+				</h3>
+			</div>
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<h5 class="mb-3 ms-lg-2">
+							<strong>Are you on antibiotics for your foot problem?</strong>
+						</h5>
+						<select class="form-control form-select option-select-bloc-0-style mb-lg-3 ms-lg-2">
+							<option value="0">
+								Please select...
+							</option>
+							<option value="0">
+								Yes
+							</option>
+							<option value="0">
+								No
+							</option>
+						</select>
+						<div class="divider-h">
+						</div>
+						<h5 class="mb-4 mt-lg-4 mb-lg-3">
+							<strong>Please list any diagnosed medical condition(s) and allergies you have.</strong><br>
+						</h5>
+						<div class="form-group mb-3">
+							<input class="form-control field-bloc-0-style" placeholder="Enter medication conditions/allergies">
+						</div>
+					</div>
+					<div class="col">
+						<h5 class="mb-4">
+							<strong>Please list any medicines you currently take.</strong><br>
+						</h5>
+						<div class="form-group mb-3">
+							<input class="form-control" placeholder="List current medications" id="input_2890">
+							<div class="divider-h">
+							</div>
+							<h5 class="mb-3 ms-lg-2 mt-lg-4 mb-lg-2">
+								<strong>Do you give consent for us to check your medical records</strong><br>
+							</h5>
+							<select class="form-control form-select option-select-bloc-0-style mb-lg-3 ms-lg-2 mt-lg-1">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select name="consent" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Appointment and&nbsp;Accessibility</strong>
+				</h3>
+			</div>
+			<div class="col-lg-12 bgc-4888 mt-lg-2 mb-lg-2">
+				<div class="row">
+					<div class="col pb-lg-4">
+						<div class="ms-lg-3">
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Has a podiatrist helped you for this problem before?<br></strong>
+							</h5>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select>
+								<div class="divider-h">
+								</div>
+							</div>
+						</div>
+						<div class="ms-lg-3">
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Are you happy to attend a student clinic?<br></strong>
+							</h5>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select>
+								<div class="divider-h">
+								</div>
+							</div>
+						</div>
+						<div class="ms-lg-3">
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Do you require an interpreter?<br></strong>
+							</h5>
+							<div class="form-group mb-3 container-div-style">
+								<select class="form-control form-select option-select-bloc-0-style ms-lg-3">
+									<option value="0">
+										Please select...
+									</option>
+									<option value="0">
+										Yes
+									</option>
+									<option value="0">
+										No
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col pb-lg-4">
+						<div>
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Are you able to attend a video appointment?&nbsp;</strong><br>
+							</h5>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select>
+							<div class="divider-h">
+							</div>
+						</div>
+						<div>
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Please let us know if you require support for your appointment</strong><br>
+							</h5>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Wheelchair accessible venue
+								</option>
+								<option value="0">
+									Hearing loop
+								</option>
+								<option value="0">
+									Venue with bariatric equipment (if you are over 25 stone)
+								</option>
+							</select>
+							<div class="divider-h">
+							</div>
+						</div>
+						<div>
+							<h5 class="mb-4 mt-lg-4 mb-lg-3 ms-lg-3">
+								<strong>Are you able to travel out-with your local area?</strong><br>
+							</h5>
+							<select class="form-control form-select option-select-style ms-lg-3">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Yes
+								</option>
+								<option value="0">
+									No
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 bgc-4888 mb-lg-3">
+				<h3 class="mb-4 mt-lg-4">
+					<strong>Friend or carer referral</strong>
+				</h3>
+			</div>
+			<div class="col">
+				<h5 class="mb-3 ms-lg-2">
+					If you have completed this form on behalf of someone else because they do not have capacity to consent to treatment please provide your name, address and relation to the patient.<br>
+				</h5>
+				<div class="row">
+					<div class="col">
+						<h4 class="mb-4">
+							<strong>Name:</strong>
+						</h4>
+						<div class="form-group mb-3">
+							<input class="form-control" placeholder="Enter Name" name="patient_name" >
+							<h4 class="mb-4 mt-lg-4 mb-lg-3">
+								<strong>What is your relation to patient?</strong>
+							</h4>
+							<select class="form-control form-select option-select-style ms-lg-2">
+								<option value="0">
+									Please select...
+								</option>
+								<option value="0">
+									Friend
+								</option>
+								<option value="0">
+									Carer
+								</option>
+								<option value="0">
+									Husband
+								</option>
+								<option value="0">
+									Spouse
+								</option>
+								<option value="0">
+									Daughter
+								</option>
+								<option value="0">
+									Son
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="col">
+						<div>
+							<h4 class="mb-4">
+								<strong>Address:</strong>
+							</h4>
+							<input class="form-control" placeholder="Enter Address Line 1" name="address1" >
+							<input class="form-control mt-lg-4" placeholder="Enter Address Line 2" name="address2" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col">
+						<div class="divider-h">
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox">
+							<label class="form-check-label">
+								I understand that by signing this form, I am giving permission for the information about me to be shared with other service providers in connection with my care or needs. I confirm that I have provided true and complete information and I agree to a referral being made to support my needs.
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 mt-lg-3">
+				<div class="row">
+					<div class="col">
+						</form><a id="submitReferral" href="./" class="btn btn-d btn-lg">SUBMIT REFERRAL</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- bloc-0 END -->
+
+<!-- ScrollToTop Button -->
+<button aria-label="Scroll to top button" class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32"><path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13"/></svg></button>
+<!-- ScrollToTop Button END-->
+
+
+</div>
+<!-- Main container END -->
+    
+
+
+<!-- Additional JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/blocs.min.js?8478"></script>
+<script src="./js/lazysizes.min.js" defer></script><!-- Additional JS END -->
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("referralForm");
+  const btn = document.getElementById("submitReferral");
+
+  function buildReferralText(form) {
+    const data = new FormData(form);
+    const lines = [];
+    lines.push("NHS Lanarkshire Podiatry Referral Form");
+    lines.push("Generated: " + new Date().toLocaleString());
+    lines.push("=====================================");
+    lines.push("");
+
+    // PATIENT INFORMATION
+    lines.push("PATIENT INFORMATION");
+    lines.push("Name: " + (data.get("patient_name") || ""));
+    lines.push("Address Line 1: " + (data.get("address1") || ""));
+    lines.push("Address Line 2: " + (data.get("address2") || ""));
+    lines.push("Postcode: " + (data.get("postcode") || ""));
+    lines.push("GP Practice: " + (data.get("gp_practice") || ""));
+    lines.push("Date of Birth: " + (data.get("dob") || ""));
+    lines.push("Telephone: " + (data.get("telephone") || ""));
+    lines.push("Voicemail Allowed: " + (data.get("voicemail_yes") ? "Yes" : data.get("voicemail_no") ? "No" : ""));
+    lines.push("Email: " + (data.get("email") || ""));
+    lines.push("");
+
+    // MAIN PROBLEM
+    lines.push("MAIN PROBLEM");
+    lines.push("Problem: " + (data.get("main_problem") || ""));
+    lines.push("When Started: " + (data.get("when_started") || ""));
+    lines.push("Which Foot: " + (data.get("which_foot") || ""));
+    lines.push("Pain Worsening: " + (data.get("pain_worsening") || ""));
+    lines.push("");
+
+    // MEDICAL BACKGROUND
+    lines.push("MEDICAL BACKGROUND");
+    lines.push("Diabetes: " + (data.get("diabetes") || ""));
+    lines.push("Previous Wound: " + (data.get("previous_wound") || ""));
+    lines.push("");
+
+    // SYMPTOMS
+    lines.push("SYMPTOMS");
+    ["cuts_breaks","swelling","heat","colour_change","leaking_fluid","new_pain"].forEach(f=>{
+      lines.push(f + ": " + (data.get(f) || ""));
+    });
+    lines.push("");
+
+    // LOCATION OF ISSUE (checkboxes)
+    lines.push("LOCATION OF ISSUE");
+    const locationFields = [
+      "loc_inside_ankle","loc_front_ankle","loc_back_ankle","loc_back_heel","loc_achilles",
+      "loc_outside_ankle","toe1_top","toe2_top","toe3_top","toe4_top","toe5_top",
+      "toe1_bottom","toe2_bottom","toe3_bottom","toe4_bottom","toe5_bottom",
+      "ball_of_foot","arch_inside","arch_outside","heel_inside","heel_outside","whole_foot"
+    ];
+    locationFields.forEach(field => {
+      if (data.get(field)) lines.push(field + ": Yes");
+    });
+    lines.push("");
+
+    // DETAILS
+    lines.push("DETAILS");
+    lines.push("Problem Description: " + (data.get("problem_detail") || ""));
+    lines.push("");
+
+    // CONSENT
+    lines.push("CONSENT");
+    lines.push("Agreed: " + (data.get("consent") ? "Yes" : "No"));
+    lines.push("");
+    lines.push("=====================================");
+    lines.push("End of Referral");
+    return lines.join("\n");
+  }
+
+  function downloadText(filename, text) {
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  if (btn && form) {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const txt = buildReferralText(form);
+      let patientName = (form.querySelector("[name=patient_name]") || { value: "" }).value.trim().replace(/\s+/g,"-");
+      let filename = "podiatry-referral" + (patientName ? "-" + patientName : "") + ".txt";
+      downloadText(filename, txt);
+      const msg = document.createElement("div");
+      msg.style.position = "fixed";
+      msg.style.right = "20px";
+      msg.style.bottom = "70px";
+      msg.style.background = "rgba(0,0,0,0.8)";
+      msg.style.color = "#fff";
+      msg.style.padding = "10px 14px";
+      msg.style.borderRadius = "6px";
+      msg.style.zIndex = 99999;
+      msg.style.fontFamily = "Helvetica, Arial, sans-serif";
+      msg.textContent = "Referral downloaded — attach the file to your email.";
+      document.body.appendChild(msg);
+      setTimeout(()=>msg.remove(), 3500);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
